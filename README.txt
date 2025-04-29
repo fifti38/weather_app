@@ -1,1 +1,1 @@
-This is the first readme content i will be posting for this particular project of creating a weather api using vanilla JS concepts
+This is the readme content i will be posting for this particular project of creating a weather api using vanilla JS conceptsgit s
