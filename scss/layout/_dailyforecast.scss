@@ -10,6 +10,7 @@
   
     .dailyForecast__contents {
       flex-grow: 1;
+      flex-shrink: 1;
       @include flexCenter;
       justify-content: space-evenly;
       color: $font-color;
