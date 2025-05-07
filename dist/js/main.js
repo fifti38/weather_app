@@ -1,7 +1,9 @@
 import {
     setLocationObject,
     getHomeLocation,
-    cleanText
+    cleanText,
+    getCoordsFromApi,
+    getWeatherFromCoords
  } from "./dataFunction.js";
 
   import {
@@ -9,7 +11,8 @@ import {
     addSpinner,
     displayError,
     displayApiError,
-    updateScreenReaderConfirmation  } from "./domFunctions.js";
+    updateScreenReaderConfirmation,
+    updateDisplay  } from "./domFunctions.js";
 
   import CurrentLocation from "./CurrentLocation.js";
   const currentLoc = new CurrentLocation();
@@ -30,6 +33,7 @@ const initApp = () => {
     locationEntry.addEventListener("submit", submitNewLocation);
 
     setPlaceholderText();
+    window.addEventListener("resize", setPlaceholderText);
 
     loadWeather();
 }
@@ -136,7 +140,13 @@ const getGeoWeather = (event) => {
     const coordsData = await getCoordsFromApi(entryText, currentLoc.getUnit());
     if (coordsData) {
       if (coordsData.cod === 200) {
-        const myCoordsObj = {};
+        const myCoordsObj = {
+          lat: coordsData.coord.lat,
+          lon: coordsData.coord.lon,
+          name: coordsData.sys.country
+            ? `${coordsData.name}, ${coordsData.sys.country}`
+            : coordsData.name
+        };
         setLocationObject(currentLoc, myCoordsObj);
         updateDataAndDisplay(currentLoc);
       } else {
@@ -148,6 +158,6 @@ const getGeoWeather = (event) => {
   };
 
   const updateDataAndDisplay = async (locationObj) => {
-    //const weatherJson = await getWeatherFromCoords(locationObj);
-    //if (weatherJson) updateDisplay(weatherJson, locationObj);
+    const weatherJson = await getWeatherFromCoords(locationObj);
+    if (weatherJson) updateDisplay(weatherJson, locationObj);
   };
