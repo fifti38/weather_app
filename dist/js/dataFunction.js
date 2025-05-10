@@ -1,3 +1,4 @@
+const WEATHER_API_KEY ="ee2dcf251057075170764f5213098820";
 
 export const setLocationObject = (locationObj, coordsObj) => {
     const { lat, lon, name, unit } = coordsObj;
@@ -66,19 +67,19 @@ export const cleanText = (text) => {
     } catch (err) {
       console.error(err.stack);
     } */
-      const urlDataObj = {
-        text: entryText,
-        units: units
-      };
-      try {
-        const dataStream = await fetch("./.netlify/functions/get_coords", {
-          method: "POST",
-          body: JSON.stringify(urlDataObj)
-        });
-        const jsonData = await dataStream.json();
-        return jsonData;
-      } catch (err) {
-        console.error(err);
-      }
+     const urlDataObj = {
+    text: entryText,
+    units: units
+  };
+  try {
+    const dataStream = await fetch("./.netlify/functions/get_coords", {
+      method: "POST",
+      body: JSON.stringify(urlDataObj)
+    });
+    const jsonData = await dataStream.json();
+    return jsonData;
+  } catch (err) {
+    console.error(err);
+  }
     };
 
